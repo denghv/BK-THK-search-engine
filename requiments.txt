@@ -1,0 +1,5 @@
+Flask==2.2.3
+elasticsearch==8.10.2
+selenium==4.0.0
+beautifulsoup4==4.11.1
+requests==2.26.0
