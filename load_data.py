@@ -17,8 +17,9 @@ index_settings = {
         },
         "analysis": {
             "tokenizer": {
-                "whitespace_tokenizer": {
-                    "type": "whitespace"
+                "pipe_and_space_tokenizer": {
+                    "type": "pattern",
+                    "pattern": "[\\s\\|]+"
                 }
             },
             "filter": {
@@ -36,14 +37,23 @@ index_settings = {
                 "bigram_filter": {
                     "type": "shingle",
                     "min_shingle_size": 2,
-                    "max_shingle_size": 3,
+                    "max_shingle_size": 5,
                     "output_unigrams": False
                 }
             },
             "analyzer": {
                 "custom_analyzer": {
                     "type": "custom",
-                    "tokenizer": "whitespace_tokenizer",
+                    "tokenizer": "pipe_and_space_tokenizer",
+                    "filter": [
+                        "lowercase_filter",
+                        "ascii_folding_filter",
+                        "stemmer_filter"
+                    ]
+                },
+                "bigram_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "pipe_and_space_tokenizer",
                     "filter": [
                         "lowercase_filter",
                         "ascii_folding_filter",
@@ -63,28 +73,28 @@ index_settings = {
             },
             "description": {
                 "type": "text",
-                "analyzer": "custom_analyzer",
-                "similarity": "default",
-                "fielddata": True
+                "analyzer": "bigram_analyzer",
+                "similarity": "default"
             }
         }
     }
 }
 
+
 # Kiểm tra nếu index tồn tại và xóa trước khi tạo lại
-if es.indices.exists(index="documents_list"):
-    es.indices.delete(index="documents_list")
+if es.indices.exists(index="vie_documents_list"):
+    es.indices.delete(index="vie_documents_list")
 
 # Tạo index `documents_list` với cấu hình custom
-es.indices.create(index="documents_list", body=index_settings)
-print("Index `documents_list` đã được tạo với cấu hình custom.")
+es.indices.create(index="vie_documents_list", body=index_settings)
+print("Index `vie_documents_list` đã được tạo với cấu hình custom.")
 
 # Nạp dữ liệu từ file JSON
-with open('D:\Project Github\Search_engine_start\merged_data.json', 'r', encoding='utf-8') as file:
-    merged_data = json.load(file)
+with open('D:\\Project Github\\BK-THK_Search_Engine\\BK-THK-search-engine\\data\\final_data.json', 'r', encoding='utf-8') as file:
+    final_data = json.load(file)
 
 # Nạp từng tài liệu vào Elasticsearch
-for i, document in enumerate(merged_data):
-    es.index(index="documents_list", id=i, document=document)
+for i, document in enumerate(final_data):
+    es.index(index="vie_documents_list", id=i, document=document)
 
 print("Dữ liệu đã được nạp vào Elasticsearch.")

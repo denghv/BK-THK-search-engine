@@ -54,7 +54,7 @@ def search():
     try:
         # Tìm kiếm trong Elasticsearch
         response = es.search(
-            index="documents_list",
+            index="vie_documents_list",
             body={
                 "query": {
                     "multi_match": {

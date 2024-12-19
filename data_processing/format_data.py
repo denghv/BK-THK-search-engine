@@ -1,7 +1,7 @@
 import json
 
 # Đọc dữ liệu từ file JSON
-with open('path:\\old_dataset\\sol3_data.json', 'r', encoding='utf-8') as file:
+with open('path:\\old_dataset\\data.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
 # Xóa các trường thừa và bổ sung trường 'link' nếu thiếu

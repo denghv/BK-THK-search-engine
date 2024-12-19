@@ -43,8 +43,8 @@
         <div>
             {% for doc in documents %}
                 <div class="search-result">
-                    <a href="{{ doc.link }}" class="title" target="_blank">{{ doc.title }}</a>
-                    <p class="description"><strong>Mô tả:</strong> {{ doc.short_description }}</p>
+                    <a href="{{ doc.link }}" class="title" target="_blank">{{ doc.title | replace('|', ' ') }}</a>
+                    <p class="description"><strong>Mô tả:</strong> {{ doc.short_description | replace('|', ' ') }}</p>
                 </div>
             {% endfor %}
         </div>
